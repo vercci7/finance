@@ -1,3 +1,4 @@
+```dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../viewmodels/auth_viewmodel.dart';
@@ -17,6 +18,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
   final _passwordController = TextEditingController();
 
   bool _isLoading = false;
+  bool _obscurePassword = true;
 
   @override
   void dispose() {
@@ -73,117 +75,190 @@ class _LoginViewState extends ConsumerState<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
-          child: Container(
-            constraints: const BoxConstraints(maxWidth: 400),
-            child: Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF0F172A),
+              Color(0xFF1E293B),
+              Color(0xFF16A34A),
+            ],
+          ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: 420,
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(32.0),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Icon(
-                        Icons.account_balance,
-                        size: 64,
-                        color: Colors.green[700],
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      Text(
-                        'CapitalFlow Pro',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green[800],
+              child: Card(
+                elevation: 15,
+                shadowColor: Colors.black26,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(32),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        CircleAvatar(
+                          radius: 42,
+                          backgroundColor:
+                              Colors.green.withOpacity(0.15),
+                          child: Icon(
+                            Icons.account_balance_wallet_rounded,
+                            size: 46,
+                            color: Colors.green.shade700,
+                          ),
                         ),
-                      ),
 
-                      const SizedBox(height: 32),
+                        const SizedBox(height: 20),
 
-                      TextFormField(
-                        controller: _emailController,
-                        decoration: const InputDecoration(
-                          labelText: 'E-mail',
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.email),
+                        Text(
+                          'NexaFinance',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green.shade700,
+                            letterSpacing: 1,
+                          ),
                         ),
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (v) {
-                          if (v == null || !v.contains('@')) {
-                            return 'Insira um e-mail válido';
-                          }
-                          return null;
-                        },
-                      ),
 
-                      const SizedBox(height: 16),
+                        const SizedBox(height: 8),
 
-                      TextFormField(
-                        controller: _passwordController,
-                        decoration: const InputDecoration(
-                          labelText: 'Senha',
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.lock),
+                        const Text(
+                          'Seu futuro financeiro começa com decisões inteligentes.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey,
+                            height: 1.5,
+                          ),
                         ),
-                        obscureText: true,
-                        validator: (v) {
-                          if (v == null || v.isEmpty) {
-                            return 'Insira sua senha';
-                          }
-                          return null;
-                        },
-                      ),
 
-                      const SizedBox(height: 24),
+                        const SizedBox(height: 32),
 
-                      _isLoading
-                          ? const Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green[700],
-                                foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                              onPressed: _executeLogin,
-                              child: const Text(
-                                'Entrar',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                        TextFormField(
+                          controller: _emailController,
+                          keyboardType:
+                              TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            labelText: 'E-mail',
+                            prefixIcon: const Icon(
+                              Icons.email_outlined,
                             ),
-
-                      const SizedBox(height: 12),
-
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed('/register');
-                        },
-                        child: const Text(
-                          'Não tem uma conta? Cadastre-se',
+                            filled: true,
+                            fillColor: Colors.grey.shade50,
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(14),
+                            ),
+                          ),
+                          validator: (v) {
+                            if (v == null || !v.contains('@')) {
+                              return 'Insira um e-mail válido';
+                            }
+                            return null;
+                          },
                         ),
-                      ),
-                    ],
+
+                        const SizedBox(height: 18),
+
+                        TextFormField(
+                          controller: _passwordController,
+                          obscureText: _obscurePassword,
+                          decoration: InputDecoration(
+                            labelText: 'Senha',
+                            prefixIcon: const Icon(
+                              Icons.lock_outline,
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscurePassword
+                                    ? Icons.visibility_outlined
+                                    : Icons.visibility_off_outlined,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _obscurePassword =
+                                      !_obscurePassword;
+                                });
+                              },
+                            ),
+                            filled: true,
+                            fillColor: Colors.grey.shade50,
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(14),
+                            ),
+                          ),
+                          validator: (v) {
+                            if (v == null || v.isEmpty) {
+                              return 'Insira sua senha';
+                            }
+                            return null;
+                          },
+                        ),
+
+                        const SizedBox(height: 28),
+
+                        _isLoading
+                            ? const Center(
+                                child:
+                                    CircularProgressIndicator(),
+                              )
+                            : ElevatedButton(
+                                onPressed: _executeLogin,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Colors.green.shade700,
+                                  foregroundColor: Colors.white,
+                                  elevation: 6,
+                                  minimumSize:
+                                      const Size(double.infinity, 58),
+                                  shape:
+                                      RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(16),
+                                  ),
+                                ),
+                                child: const Text(
+                                  'Entrar',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight:
+                                        FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+
+                        const SizedBox(height: 14),
+
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushNamed('/register');
+                          },
+                          child: Text(
+                            'Criar uma conta',
+                            style: TextStyle(
+                              color: Colors.green.shade700,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -194,3 +269,4 @@ class _LoginViewState extends ConsumerState<LoginView> {
     );
   }
 }
+```
