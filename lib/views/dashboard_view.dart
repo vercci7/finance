@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../viewmodels/transaction_viewmodel.dart';
-import '../viewmodels/crypto_viewmodel.dart'; // Import do novo ViewModel da API
+import '../viewmodels/crypto_viewmodel.dart'; 
 import 'transaction_history_view.dart';
 import 'financial_insights_view.dart';
 
@@ -12,12 +12,12 @@ class DashboardView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final txState = ref.watch(transactionProvider(userId));
-    // Escuta o estado da API de Cotações
+
     final cryptoAsync = ref.watch(cryptoViewModelProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard CapitalFlow'),
+       title: const Text('Meu nexafinace'),
         backgroundColor: Colors.green[50],
         actions: [
           IconButton(
@@ -84,7 +84,7 @@ class DashboardView extends ConsumerWidget {
                   ),
                   const SizedBox(height: 24),
 
-                  // --- SEÇÃO DA API REAL (MERCADO FINANCEIRO) ---
+          
                   const Row(
                     children: [
                       Icon(Icons.bar_chart_rounded, color: Colors.green),
@@ -96,9 +96,8 @@ class DashboardView extends ConsumerWidget {
                   ),
                   const SizedBox(height: 12),
 
-                  // Consumo reativo do FutureProvider da API (Cobre UX Superior)
                   cryptoAsync.when(
-                    // 1. Estado de Carregamento da API
+                   
                     loading: () => Card(
                       elevation: 2,
                       shape: RoundedRectangleBorder(
@@ -123,7 +122,7 @@ class DashboardView extends ConsumerWidget {
                             const SizedBox(width: 12),
                             Expanded(
                               child: Text(
-                                'Não foi possível carregar as cotações mundiais. Verifique sua conexão.',
+                                'Não foi possível carregar as cotações. Verifique sua conexão.',
                                 style: TextStyle(color: Colors.red[900], fontSize: 13),
                               ),
                             ),
@@ -201,7 +200,7 @@ class DashboardView extends ConsumerWidget {
                         Card(
                           child: ListTile(
                             leading: Icon(Icons.savings_rounded, color: Colors.orange),
-                            title: Text('A Regra de Ouro dos 50/30/20'),
+                            title: Text('A Regra dos 50/30/20'),
                             subtitle: Text(
                                 'Separe 50% para necessidades básicas, 30% para desejos pessoais e guarde 20% para o futuro.'),
                           ),
@@ -211,7 +210,7 @@ class DashboardView extends ConsumerWidget {
                             leading: Icon(Icons.shield_rounded, color: Colors.blue),
                             title: Text('Reserva de Emergência'),
                             subtitle: Text(
-                                'Tente manter o equivalente a 6 meses do seu custo de vida guardado em um local de resgate rápido.'),
+                                'Tente manter o equivalente a 7 meses do seu custo de vida guardado em um local de resgate rápido.'),
                           ),
                         ),
                       ],
@@ -348,7 +347,7 @@ class DashboardView extends ConsumerWidget {
                     Navigator.pop(context);
                   }
                 },
-                child: const Text('Confirmar Lançamento'),
+                child: const Text('Confirmar'),
               ),
               const SizedBox(height: 24),
             ],
